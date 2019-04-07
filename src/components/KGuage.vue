@@ -1,10 +1,10 @@
 <template>
   <svg :height="height" version="1.1" :width="width" :viewBox="`0 0 250 ${doughnut ? 250 : 150}`" xmlns="http://www.w3.org/2000/svg">
-    <filter id="g14-inner-shadow">
+    <filter v-if="shadowOpacity" id="g14-inner-shadow">
       <feOffset dx="0" dy="3"></feOffset>
       <feGaussianBlur result="offset-blur" stdDeviation="5"></feGaussianBlur>
       <feComposite operator="out" in="SourceGraphic" in2="offset-blur" result="inverse"></feComposite>
-      <feFlood flood-color="black" flood-opacity="0.2" result="color"></feFlood>
+      <feFlood flood-color="black" :flood-opacity="shadowOpacity" result="color"></feFlood>
       <feComposite operator="in" in="color" in2="inverse" result="shadow"></feComposite>
       <feComposite operator="over" in="shadow" in2="SourceGraphic"></feComposite>
     </filter>
@@ -45,14 +45,12 @@ function animate(oldVal, newVal, duration, callback) {
   let continueUpdating = true;
 
   const doUpdate = ()=> {
-    const oldValDiff = Math.max(oldVal, newVal) - Math.min(oldVal, newVal);
+    const oldValDiff = newVal - oldVal;
     const timeDiff = new Date().getTime() - curTime;
+    /* Math.max makes it so when we're over the time 
+    limit we're equal to the new value and can stop updating. */
     const ratio =  easeOutQuad(Math.min(timeDiff / duration, 1));
-    if (newVal > oldVal) {
-      oldVal = oldVal + (ratio * oldValDiff);
-    } else {
-      oldVal = oldVal - (ratio * oldValDiff);
-    }
+    oldVal += ratio * oldValDiff;
 
     callback(oldVal);
     if (newVal !== oldVal && continueUpdating) {
@@ -100,20 +98,13 @@ export default {
       type: Function,
       default: Math.round
     },
-    valueFontStyle: {
-      type: String,
-      default: 'font-size: 35px; fill: #010101; font-weight: bold; font-family: "Arial"' 
-    },
     colorSteps: {
       type: Array,
       default:()=> ["#a9d70b", "#f9c802", "#ff0000"]
     },
-    animateOnLoad: {
-      type: Boolean
-    },
-    labelText: {
+    valueFontStyle: {
       type: String,
-      default: ''
+      default: 'font-size: 35px; fill: #010101; font-weight: bold; font-family: "Arial"' 
     },
     labelStyle: {
       type: String,
@@ -123,9 +114,24 @@ export default {
       type: String,
       default: 'font: 11px Arial; fill: #b4b4b4'
     },
+    animateOnLoad: {
+      type: Boolean
+    },
+    labelText: {
+      type: String,
+      default: ''
+    },
     showMinMax: {
       type: Boolean,
       default: true
+    },
+    guageSize: {
+      type: Number,
+      default: 1
+    },
+    shadowOpacity: {
+      type: Number,
+      default: .2
     }
   },
   data() {
@@ -148,13 +154,15 @@ export default {
     }
   },
   mounted() {
-    this.$watch((vm)=> [vm.height, vm.width, vm.doughnut], this.resetBgArc);
+    this.$watch((vm)=> [vm.height, vm.width, vm.doughnut, vm.guageSize], this.resetBgArc);
     this.resetBgArc();
   },
   methods: {
     makeArc(value) {
 
-      const gws = 1;
+      /* Code taken from JustGage http://justgage.com/ */
+
+      const gws = this.guageSize;
       const dx = 0;
       const dy = this.doughnut ? 45 : 30;
 
@@ -263,4 +271,3 @@ export default {
   }
 };
 </script>
-
