@@ -25,12 +25,6 @@ export default {
       theVal: 20
     }
   },
-  mounted() {
-    return;
-    setInterval(()=> {
-      this.theVal = Math.round(100 * Math.random());
-    }, 10000)
-  },
   computed: {
     valInt() {
       return parseInt(this.theVal);
