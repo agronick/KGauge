@@ -2,7 +2,6 @@
 
 This is the JustGage JavaScript library remade for Vue.js. It does not use any dependencies including JustGage or Raphael. All rendering is done using the Vue rendering engine using SVGs.
 
-Made by Kyle Agronick
 
 
 
@@ -62,3 +61,8 @@ No properties are required but you will want to give a value as a minimum.
 | shadowOpacity | Amount of shadow. Set to 0 to disable. | .2 |
 | backgroundColor | Color of background | #edebeb |
 | easingFunction | Easing function for animations. Can be used to bounce the guage into position. | `(t)=> t*(2-t) /* Ease out quad */` |
+
+
+
+
+Made by Kyle Agronick with code from the original JustGage project. http://justgage.com/
