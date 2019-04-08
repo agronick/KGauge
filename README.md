@@ -37,7 +37,7 @@ export default {
 
 ## API
 
-No properties are required but you will want to give a value as a minimum.
+No properties are required but you'll probably want to set value, min, and max to get started.
 
 | Attr. Name        | Description                                                                                                                 | Default Value                                                           |
 |-------------------|-----------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
