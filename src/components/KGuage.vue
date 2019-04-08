@@ -1,6 +1,6 @@
 <template>
   <svg :height="height" version="1.1" :width="width" :viewBox="`0 0 250 ${doughnut ? 250 : 150}`" xmlns="http://www.w3.org/2000/svg">
-    <filter v-if="shadowOpacity" id="g14-inner-shadow">
+    <filter v-if="shadowOpacity" :id="renderId">
       <feOffset dx="0" dy="3"></feOffset>
       <feGaussianBlur result="offset-blur" stdDeviation="5"></feGaussianBlur>
       <feComposite operator="out" in="SourceGraphic" in2="offset-blur" result="inverse"></feComposite>
@@ -8,8 +8,8 @@
       <feComposite operator="in" in="color" in2="inverse" result="shadow"></feComposite>
       <feComposite operator="over" in="shadow" in2="SourceGraphic"></feComposite>
     </filter>
-    <path fill="#edebeb" stroke="none" :d="backgroundPath" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" filter="url(#g14-inner-shadow)"></path>
-    <path :fill="guageColor" stroke="none" :d="guagePath" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" filter="url(#g14-inner-shadow)"></path>
+    <path :fill="backgroundColor" stroke="none" :d="backgroundPath" :style="strokeStyle" :filter="`url(#${renderId})`"></path>
+    <path :fill="guageColor" stroke="none" :d="guagePath.path" :style="strokeStyle" :filter="`url(#${renderId})`"></path>
     <text x="125"
           y="128"
           alignment-baseline="baseline"
@@ -19,41 +19,47 @@
     <text x="125"
           y="141"
           text-anchor="middle"
-          :style="labelStyle"
+          :style="labelFontStyle"
           v-html="labelText"></text>
-    <text :x="doughnut ? 60 : 43"
+    <text :x="minTextX"
           :y="doughnut ? 125 : 145"
           v-if="showMinMax"
           text-anchor="middle"
-          :style="minMaxTextStyle"
+          :style="minMaxFontStyle"
           v-html="min"></text>
-    <text :x="doughnut ? 190 : 205"
+    <text :x="maxTextX"
           :y="doughnut ? 125 : 145"
           v-if="showMinMax"
           text-anchor="middle"
-          :style="minMaxTextStyle"
+          :style="minMaxFontStyle"
           v-html="max"></text>
   </svg>
 </template>
 
 <script>
 
-const easeOutQuad = (t)=> t*(2-t);
+/* Used to give each SVG a unique ID */
+let renderId = 0;
 
-function animate(oldVal, newVal, duration, callback) {
+/* Useful function for doing the calculations for animations without a massive Tween library */
+export function animateCalc(oldVal, newVal, duration, callback, easingFunction) {
   const curTime = new Date().getTime();
   let continueUpdating = true;
+  const oldValDiff = newVal - oldVal;
 
   const doUpdate = ()=> {
-    const oldValDiff = newVal - oldVal;
     const timeDiff = new Date().getTime() - curTime;
-    /* Math.max makes it so when we're over the time 
-    limit we're equal to the new value and can stop updating. */
-    const ratio =  easeOutQuad(Math.min(timeDiff / duration, 1));
-    oldVal += ratio * oldValDiff;
+    /* Math.min makes it so when we're over the time 
+    limit we become equal to the new value and can stop updating. */
+    let ratio =  Math.min(timeDiff / duration, 1);
+    let calcRatio = ratio;
+    if (easingFunction) {
+      calcRatio = easingFunction(ratio);
+    }
 
-    callback(oldVal);
-    if (newVal !== oldVal && continueUpdating) {
+    callback(oldVal + calcRatio * oldValDiff);
+
+    if (ratio < 1 && continueUpdating) {
       window.requestAnimationFrame(()=> doUpdate());
     }
   };  
@@ -76,7 +82,6 @@ export default {
       default: 150
     },
     value: {
-      type: Number,
       default: 10
     },
     min: {
@@ -87,7 +92,7 @@ export default {
       type: Number,
       default: 100
     },
-    animateDuration: {
+    animationDuration: {
       type: Number,
       default: 1000
     },
@@ -106,16 +111,17 @@ export default {
       type: String,
       default: 'font-size: 35px; fill: #010101; font-weight: bold; font-family: "Arial"' 
     },
-    labelStyle: {
+    labelFontStyle: {
       type: String,
       default: 'font: 10px Arial; fill: #b3b3b3'
     },
-    minMaxTextStyle: {
+    minMaxFontStyle: {
       type: String,
       default: 'font: 11px Arial; fill: #b4b4b4'
     },
     animateOnLoad: {
-      type: Boolean
+      type: Boolean,
+      default: true
     },
     labelText: {
       type: String,
@@ -132,6 +138,14 @@ export default {
     shadowOpacity: {
       type: Number,
       default: .2
+    },
+    backgroundColor: {
+      type: String,
+      default: '#edebeb'
+    },
+    easingFunction: {
+      type: Function,
+      default: (t)=> t*(2-t) /* Ease out quad */
     }
   },
   data() {
@@ -150,7 +164,10 @@ export default {
       backgroundPath: '',
       guageColor: '',
       builtColorSteps: intColors,
-      animationCanceler: null
+      animationCanceler: null,
+      renderId: `k-guage-filter-${++renderId}`,
+      minTextX: 0,
+      maxTextX: 0
     }
   },
   mounted() {
@@ -160,7 +177,7 @@ export default {
   methods: {
     makeArc(value) {
 
-      /* Code taken from JustGage http://justgage.com/ */
+      /* Code used from JustGage http://justgage.com/ */
 
       const gws = this.guageSize;
       const dx = 0;
@@ -178,9 +195,9 @@ export default {
         const Cx = w / 2 + dx;
         const Cy = h / 2 + dy;
 
-        const Xo = Cx + Ro * Math.cos(alpha);
+        const maxTextX2 = Cx + Ro * Math.cos(alpha);
         const Yo = Cy - Ro * Math.sin(alpha);
-        const Xi = Cx + Ri * Math.cos(alpha);
+        const maxTextX1 = Cx + Ri * Math.cos(alpha);
         const Yi = Cy - Ri * Math.sin(alpha);
 
         let path = "M" + (Cx - Ri) + "," + Cy + " ";
@@ -188,14 +205,18 @@ export default {
         if (value > ((this.max - this.min) / 2)) {
           path += "A" + Ro + "," + Ro + " 0 0 1 " + (Cx + Ro) + "," + Cy + " ";
         }
-        path += "A" + Ro + "," + Ro + " 0 0 1 " + Xo + "," + Yo + " ";
-        path += "L" + Xi + "," + Yi + " ";
+        path += "A" + Ro + "," + Ro + " 0 0 1 " + maxTextX2 + "," + Yo + " ";
+        path += "L" + maxTextX1 + "," + Yi + " ";
         if (value > ((this.max - this.min) / 2)) {
           path += "A" + Ri + "," + Ri + " 0 0 0 " + (Cx + Ri) + "," + Cy + " ";
         }
         path += "A" + Ri + "," + Ri + " 0 0 0 " + (Cx - Ri) + "," + Cy + " ";
 
-        return path;
+        return {
+          path: path,
+          minTextX: 60,
+          maxTextX: 190
+        };
 
       }
 
@@ -206,22 +227,30 @@ export default {
       const Cx = w / 2 + dx;
       const Cy = h / 1.5 + dy;
 
-      const Xo = Cx + Ro * Math.cos(alpha);
+      const maxTextX2 = Cx + Ro * Math.cos(alpha);
       const Yo = Cy - Ro * Math.sin(alpha);
-      const Xi = Cx + Ri * Math.cos(alpha);
+      const maxTextX1 = Cx + Ri * Math.cos(alpha);
       const Yi = Cy - Ri * Math.sin(alpha);
 
-      let path = "M" + (Cx - Ri) + "," + Cy + " ";
-      path += "L" + (Cx - Ro) + "," + Cy + " ";
-      path += "A" + Ro + "," + Ro + " 0 0 1 " + Xo + "," + Yo + " ";
-      path += "L" + Xi + "," + Yi + " ";
-      path += "A" + Ri + "," + Ri + " 0 0 0 " + (Cx - Ri) + "," + Cy + " ";
+      const minTextX1 = Cx - Ro;
+      const minTextX2 = Cx - Ri;
+      let path = "M" + minTextX2 + "," + Cy + " ";
+      path += "L" + minTextX1 + "," + Cy + " ";
+      path += "A" + Ro + "," + Ro + " 0 0 1 " + maxTextX2 + "," + Yo + " ";
+      path += "L" + maxTextX1 + "," + Yi + " ";
+      path += "A" + Ri + "," + Ri + " 0 0 0 " + minTextX2 + "," + Cy + " ";
       path += "Z ";
 
-      return path;
+      const minTextX = minTextX1 + ((minTextX2 - minTextX1) * 0.5);
+      const maxTextX = maxTextX1 + ((maxTextX2 - maxTextX1) * 0.5);
+
+      return { path, minTextX, maxTextX };
     },
     resetBgArc() {
-      this.backgroundPath = this.makeArc(this.max);
+      const pathProps = this.makeArc(this.max)
+      this.backgroundPath = pathProps.path;
+      this.minTextX = pathProps.minTextX;
+      this.maxTextX = pathProps.maxTextX;
     },
     getColorForValue(val) {
       const stepCount = this.builtColorSteps.length;
@@ -241,12 +270,22 @@ export default {
       })
 
       return newColor;
+    },
+    checkLimits(val) {
+      return Math.max(this.min, Math.min(this.max, val))
     }
   },
   computed: {
     guagePath() {
       return this.makeArc(this.shownValue);
     },
+    strokeStyle() {
+      if (!this.doughnut) {
+        return '';
+      } else {
+        return 'transform: rotate(90deg); transform-origin: 50% 50%';
+      }
+    }
   },
   watch: {
     value: {
@@ -254,10 +293,11 @@ export default {
         if (this.animationCanceler) {
           this.animationCanceler();
         }
-        this.animationCanceler = animate(this.shownValue, newVal, this.animateDuration, (val)=> {
-          this.shownValue = val;
-          this.printValue = this.formatFunction(val);
-        });
+
+        this.animationCanceler = animateCalc(this.shownValue, this.checkLimits(newVal), this.animationDuration, (val)=> {
+          this.shownValue = this.checkLimits(val);
+          this.printValue = this.formatFunction(this.shownValue);
+        }, this.easingFunction);
       },
       immediate: true
     },
