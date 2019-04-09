@@ -34,7 +34,7 @@ export default {
 ```
 Or just download and add
 ```html
-<script defer src="dist/kguage-vue.min.js"></script>
+<script src="dist/kguage-vue.min.js"></script>
 ```
 
 
