@@ -1,14 +1,22 @@
 {
   "name": "kguage-vue",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": false,
+  "main": "dist/kguage-vue.umd.js",
+  "module": "dist/kguage-vue.esm.js",
+  "unpkg": "dist/kguage-vue.min.js",
+  "browser": {
+    "./sfc": "src/KGuage.vue"
+  },  
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "build:umd": "rollup --config rollup.config.js --format umd --file dist/kguage-vue.umd.js",
+    "build:es": "rollup --config rollup.config.js --format es --file dist/kguage-vue.esm.js",
+    "build:unpkg": "rollup --config rollup.config.js --format iife --file dist/kguage-vue.min.js",
+    "build:example": "rollup --config rollup.example.config.js --format iife --file dist/kguage-example.min.js"
   },
   "dependencies": {
-    "core-js": "^2.6.5",
     "vue": "^2.6.6"
   },
   "devDependencies": {
@@ -19,8 +27,11 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
-    "node-sass": "^4.9.0",
-    "sass-loader": "^7.1.0",
+    "rollup": "^1.9.0",
+    "rollup-plugin-buble": "^0.19.6",
+    "rollup-plugin-commonjs": "^9.3.4",
+    "rollup-plugin-terser": "^4.0.4",
+    "rollup-plugin-vue": "^4.7.2",
     "vue-template-compiler": "^2.5.21"
   },
   "eslintConfig": {

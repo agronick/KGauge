@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+    <h3>KGuage for Vue &mdash; Based off JustGage.js &mdash; Only 8kb unminified</h3>
+    <a href="https://github.com/agronick/KGauge">https://github.com/agronick/KGauge</a>
     <div>
       <k-guage
         :value="guage1"
@@ -67,7 +69,10 @@
         min-max-font-style="font-size: 10px"
       />
       <input type="range" min="0" max="200" v-model="guage3" />
-      <div class="desc">Custom colors and formatting function. All font styles can be overridden.</div>
+      <div class="desc">
+        Custom colors and formatting function. All font styles can be
+        overridden.
+      </div>
     </div>
     <div>
       <k-guage></k-guage>
@@ -122,23 +127,34 @@ export default {
 };
 </script>
 
-<style lang="sass">
-#app
-  text-align: center
+<style>
+#app {
+	text-align: center;
+}
 
-  input
-    display: block
-    margin: auto
-    width: 400px
+#app input {
+	display: block;
+	margin: auto;
+	width: 400px;
+}
 
-  .desc
-    font-style: italic
-    color: #AAA
-    font-size: 15px
-    margin: 10px 0 20px
-    font-family: sans-serif
+* {
+  font-family: sans-serif;
+}
 
+h3 {
+  color: #333;
+}
 
-body
-  background: #FFF
+#app .desc {
+	font-style: italic;
+	color: #AAA;
+	font-size: 15px;
+	margin: 10px 0 20px;
+	font-family: sans-serif;
+}
+
+body {
+	background: #FFF;
+}
 </style>

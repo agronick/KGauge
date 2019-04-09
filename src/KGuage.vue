@@ -49,37 +49,38 @@
     <text
       x="125"
       y="128"
-      alignment-baseline="baseline"
       text-anchor="middle"
       :style="valueFontStyle"
       v-html="printValue"
     ></text>
     <text
       x="125"
-      y="133"
+      y="140"
       text-anchor="middle"
-      alignment-baseline="hanging"
       :style="labelFontStyle"
       v-html="labelText"
-    ></text>
+    >
+      <tspan v-html="labelText"></tspan>
+    </text>
     <text
       :x="minTextX"
-      :y="doughnut ? 125 : 133"
-      :alignment-baseline="doughnut ? 'middle' : 'hanging'"
+      :y="doughnut ? 133 : 140"
       v-if="showMinMax"
       text-anchor="middle"
       :style="minMaxFontStyle"
-      v-html="min"
-    ></text>
+    >
+      <tspan v-html="min"></tspan>
+    </text>
     <text
       :x="maxTextX"
-      :y="doughnut ? 125 : 133"
-      :alignment-baseline="doughnut ? 'middle' : 'hanging'"
+      :y="doughnut ? 133 : 140"
       v-if="showMinMax"
       text-anchor="middle"
       :style="minMaxFontStyle"
       v-html="max"
-    ></text>
+    >
+      <tspan v-html="max"></tspan>
+    </text>
   </svg>
 </template>
 
@@ -245,11 +246,11 @@ export default {
       if (this.doughnut) {
         const alpha =
           (1 - (2 * (value - this.min)) / (this.max - this.min)) * Math.PI;
-        const Ro = w  * .5 - w / 30;
+        const Ro = w * 0.5 - w / 30;
         const Ri = Ro - (w / 6.666666666666667) * gws;
 
-        const Cx = w / 2 + dx;
-        const Cy = h / 2 + dy;
+        const Cx = w * 0.5 + dx;
+        const Cy = h * 0.5 + dy;
 
         const maxTextX2 = Cx + Ro * Math.cos(alpha);
         const Yo = Cy - Ro * Math.sin(alpha);
