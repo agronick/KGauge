@@ -12,6 +12,7 @@ Coming
 ## How to use
 
 ```bash
+npm i @bit/agronick.vue.k-guage
 ```
 
 ```js
