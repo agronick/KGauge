@@ -1,8 +1,13 @@
 <template>
   <div id="app">
     <div class="info">
-      <h3>KGuage for Vue &mdash; Based off JustGage.js &mdash; Only 8kb minified uncompressed</h3>
-      <a href="https://github.com/agronick/KGauge">https://github.com/agronick/KGauge</a>
+      <h3>
+        KGuage for Vue &mdash; Based off JustGage.js &mdash; Only 8kb minified
+        uncompressed
+      </h3>
+      <a href="https://github.com/agronick/KGauge"
+        >https://github.com/agronick/KGauge</a
+      >
     </div>
     <div>
       <k-guage
@@ -132,13 +137,13 @@ export default {
 
 <style>
 #app {
-	text-align: center;
+  text-align: center;
 }
 
 #app input {
-	display: block;
-	margin: 50px auto 0 auto;
-	width: 400px;
+  display: block;
+  margin: 50px auto 0 auto;
+  width: 400px;
 }
 
 * {
@@ -150,15 +155,15 @@ h3 {
 }
 
 #app .desc {
-	font-style: italic;
-	color: #AAA;
-	font-size: 15px;
-	margin: 5px 0 123px;
-	font-family: sans-serif;
+  font-style: italic;
+  color: #aaa;
+  font-size: 15px;
+  margin: 5px 0 123px;
+  font-family: sans-serif;
 }
 
 body {
-	background: #FFF;
+  background: #fff;
 }
 
 .info {

@@ -38,7 +38,9 @@
       v-if="title"
       text-anchor="middle"
       style="fill: #999999; font-size: 16px; font-weight: bold"
-    ><tspan v-html="title"></tspan></text>
+    >
+      <tspan v-html="title"></tspan>
+    </text>
     <g :transform="doughnut ? 'translate(0 10)' : 'translate(0 33)'">
       <path
         :fill="backgroundColor"
@@ -59,7 +61,9 @@
         :y="doughnut ? 128 : 100"
         text-anchor="middle"
         :style="valueFontStyle"
-      ><tspan v-html="printValue"></tspan></text>
+      >
+        <tspan v-html="printValue"></tspan>
+      </text>
       <text
         x="125"
         :y="doughnut ? 140 : 112"
@@ -121,10 +125,10 @@ export function animateCalc(
     callback(oldVal + calcRatio * oldValDiff);
 
     if (ratio < 1 && continueUpdating) {
-      window.requestAnimationFrame(() => doUpdate());
+      window.requestAnimationFrame(doUpdate);
     }
   };
-  window.requestAnimationFrame(() => doUpdate());
+  window.requestAnimationFrame(doUpdate);
 
   return function() {
     continueUpdating = false;
