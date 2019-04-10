@@ -7,8 +7,10 @@ KGuage is 7% of the size of Just Gage with Raphael and covers most of the featur
 
 
 ## Demo
-https://agronick.github.io/KGauge/
-![Examples](https://raw.githubusercontent.com/agronick/KGauge/picture-for-readme/gauge.png?a=1)
+*[View an interactive demo](https://agronick.github.io/KGauge/)*
+
+
+![Examples](https://raw.githubusercontent.com/agronick/KGauge/picture-for-readme/gauge.png)
 ## How to use
 
 ```bash
