@@ -32,55 +32,63 @@
         in2="SourceGraphic"
       ></feComposite>
     </filter>
-    <path
-      :fill="backgroundColor"
-      stroke="none"
-      :d="backgroundPath"
-      :style="strokeStyle"
-      :filter="`url(#${renderId})`"
-    ></path>
-    <path
-      :fill="guageColor"
-      stroke="none"
-      :d="guagePath.path"
-      :style="strokeStyle"
-      :filter="`url(#${renderId})`"
-    ></path>
     <text
+      y="16"
       x="125"
-      y="128"
+      v-if="title"
       text-anchor="middle"
-      :style="valueFontStyle"
-      v-html="printValue"
-    ></text>
-    <text
-      x="125"
-      y="140"
-      text-anchor="middle"
-      :style="labelFontStyle"
-      v-html="labelText"
-    >
-      <tspan v-html="labelText"></tspan>
-    </text>
-    <text
-      :x="minTextX"
-      :y="doughnut ? 133 : 140"
-      v-if="showMinMax"
-      text-anchor="middle"
-      :style="minMaxFontStyle"
-    >
-      <tspan v-html="min"></tspan>
-    </text>
-    <text
-      :x="maxTextX"
-      :y="doughnut ? 133 : 140"
-      v-if="showMinMax"
-      text-anchor="middle"
-      :style="minMaxFontStyle"
-      v-html="max"
-    >
-      <tspan v-html="max"></tspan>
-    </text>
+      style="fill: #999999; font-size: 16px; font-weight: bold"
+    ><tspan v-html="title"></tspan></text>
+    <g :transform="doughnut ? 'translate(0 10)' : 'translate(0 33)'">
+      <path
+        :fill="backgroundColor"
+        stroke="none"
+        :d="backgroundPath"
+        :style="strokeStyle"
+        :filter="`url(#${renderId})`"
+      ></path>
+      <path
+        :fill="guageColor"
+        stroke="none"
+        :d="guagePath.path"
+        :style="strokeStyle"
+        :filter="`url(#${renderId})`"
+      ></path>
+      <text
+        x="125"
+        :y="doughnut ? 128 : 100"
+        text-anchor="middle"
+        :style="valueFontStyle"
+      ><tspan v-html="printValue"></tspan></text>
+      <text
+        x="125"
+        :y="doughnut ? 140 : 112"
+        text-anchor="middle"
+        :style="labelFontStyle"
+        v-html="labelText"
+      >
+        <tspan v-html="labelText"></tspan>
+      </text>
+      <text
+        :x="minTextX"
+        :y="doughnut ? 133 : 116"
+        v-if="showMinMax"
+        text-anchor="middle"
+        :style="minMaxFontStyle"
+      >
+        <tspan v-html="min"></tspan>
+      </text>
+      <text
+        :x="maxTextX"
+        :y="doughnut ? 133 : 116"
+        v-if="showMinMax"
+        text-anchor="middle"
+        :style="minMaxFontStyle"
+        v-html="max"
+      >
+        <tspan v-html="max"></tspan>
+      </text>
+    </g>
   </svg>
 </template>
 
@@ -126,6 +134,9 @@ export function animateCalc(
 export default {
   name: "k-guage",
   props: {
+    title: {
+      type: String
+    },
     width: {
       type: Number,
       default: 200
@@ -171,7 +182,7 @@ export default {
     },
     minMaxFontStyle: {
       type: String,
-      default: "font: 11px Arial; fill: #b4b4b4"
+      default: "font: 10px Arial; fill: #b4b4b4"
     },
     animateOnLoad: {
       type: Boolean,
@@ -238,7 +249,7 @@ export default {
 
       const gws = this.guageSize;
       const dx = 0;
-      const dy = this.doughnut ? 0 : 30;
+      const dy = 0;
 
       const w = 250;
       const h = this.doughnut ? 250 : 150;
@@ -246,7 +257,7 @@ export default {
       if (this.doughnut) {
         const alpha =
           (1 - (2 * (value - this.min)) / (this.max - this.min)) * Math.PI;
-        const Ro = w * 0.5 - w / 30;
+        const Ro = w * 0.5 - w / 20;
         const Ri = Ro - (w / 6.666666666666667) * gws;
 
         const Cx = w * 0.5 + dx;

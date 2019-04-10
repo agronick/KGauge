@@ -1,13 +1,16 @@
 {
-  "name": "kguage-vue",
-  "version": "1.0.0",
+  "name": "@kagronick/kguage-vue",
+  "version": "1.0.1",
   "private": false,
   "main": "dist/kguage-vue.umd.js",
   "module": "dist/kguage-vue.esm.js",
   "unpkg": "dist/kguage-vue.min.js",
   "browser": {
     "./sfc": "src/KGuage.vue"
-  },  
+  },
+  "description": "JustGage rebuilt for Vue in only 8kb",
+  "author": "Kyle Agronick",
+  "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
     "lint": "vue-cli-service lint",
@@ -57,5 +60,24 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agronick/KGauge.git"
+  },
+  "keywords": [
+    "gauge",
+    "gage",
+    "guage",
+    "donut",
+    "doughnut",
+    "circle",
+    "animated",
+    "vue",
+    "just"
+  ],
+  "bugs": {
+    "url": "https://github.com/agronick/KGauge/issues"
+  },
+  "homepage": "https://github.com/agronick/KGauge#readme"
 }

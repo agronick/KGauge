@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <h3>KGuage for Vue &mdash; Based off JustGage.js &mdash; Only 8kb unminified</h3>
-    <a href="https://github.com/agronick/KGauge">https://github.com/agronick/KGauge</a>
+    <div class="info">
+      <h3>KGuage for Vue &mdash; Based off JustGage.js &mdash; Only 8kb unminified</h3>
+      <a href="https://github.com/agronick/KGauge">https://github.com/agronick/KGauge</a>
+    </div>
     <div>
       <k-guage
         :value="guage1"
@@ -9,12 +11,14 @@
         :height="300"
         :max="300"
         label-text="GB"
+        title="Default Style"
       />
       <input type="range" min="0" max="300" v-model="guage1" />
       <div class="desc">Normal Setup (slider input is seperate component)</div>
     </div>
     <div>
       <k-guage
+        title="Doughnut Style"
         :value="guage2"
         :width="500"
         :height="300"
@@ -36,6 +40,7 @@
     </div>
     <div>
       <k-guage
+        title="Skinny Style"
         :value="guage4"
         :width="500"
         :height="300"
@@ -53,6 +58,7 @@
     </div>
     <div>
       <k-guage
+        title="Styled Style"
         :value="guage3"
         :width="500"
         :height="300"
@@ -64,9 +70,6 @@
         :color-steps="['#ff080c', '#ff54c9', '#8161ff', '#83ffb7', '#18ff27']"
         :show-min-max="true"
         :doughnut="false"
-        value-font-style="fill: darkblue; font-size: 30px;"
-        label-font-style="font-size: 10px"
-        min-max-font-style="font-size: 10px"
       />
       <input type="range" min="0" max="200" v-model="guage3" />
       <div class="desc">
@@ -134,7 +137,7 @@ export default {
 
 #app input {
 	display: block;
-	margin: auto;
+	margin: 50px auto 0 auto;
 	width: 400px;
 }
 
@@ -150,11 +153,15 @@ h3 {
 	font-style: italic;
 	color: #AAA;
 	font-size: 15px;
-	margin: 10px 0 20px;
+	margin: 5px 0 123px;
 	font-family: sans-serif;
 }
 
 body {
 	background: #FFF;
+}
+
+.info {
+  margin-bottom: 50px;
 }
 </style>
