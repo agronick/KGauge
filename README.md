@@ -1,7 +1,8 @@
 ## KGague
 
-KGague is the JustGage JavaScript library remade for Vue.js. It does not use any dependencies including JustGage or Raphael. All rendering is done using the Vue rendering engine using SVGs. The whole library is only 8kb unminified. Compare that to JustGage which is 37kb for JustGage on 90kb for Raphael. Even if you only use Vue for KGuage it will still be smaller. 
+KGague is the JustGage JavaScript library remade for Vue.js. It does not use any dependencies including JustGage or Raphael. All rendering is done using the Vue rendering engine using SVGs.
 
+KGuage is 7% of the size of Just Gage with Raphael and covers most of the features. The whole library is only 8kb minified. Compare that to JustGage which is 20kb for JustGage minified and 90kb for Raphael minified. Even if you only use Vue for KGuage your page will still be smaller. 
 
 
 
@@ -15,7 +16,7 @@ npm i @kagronick/kguage-vue
 ```
 
 ```js
-import KGuage from "./KGuage.vue";
+import KGuage from "@kagronick/kguage-vue";
 export default {
   components: {
     KGuage
