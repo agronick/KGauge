@@ -3,7 +3,7 @@
     :height="height"
     version="1.1"
     :width="width"
-    :viewBox="`0 0 250 ${doughnut ? 250 : 150}`"
+    :viewBox="`0 0 250 ${doughnut ? 280 : 150}`"
     xmlns="http://www.w3.org/2000/svg"
   >
     <filter v-if="shadowOpacity" :id="renderId">
@@ -37,11 +37,11 @@
       x="125"
       v-if="title"
       text-anchor="middle"
-      style="fill: #999999; font-size: 16px; font-weight: bold"
+      :style="titleStyle"
     >
       <tspan v-html="title"></tspan>
     </text>
-    <g :transform="doughnut ? 'translate(0 10)' : 'translate(0 33)'">
+    <g transform="translate(0 33)">
       <path
         :fill="backgroundColor"
         stroke="none"
@@ -50,15 +50,15 @@
         :filter="`url(#${renderId})`"
       ></path>
       <path
-        :fill="guageColor"
+        :fill="gaugeColor"
         stroke="none"
-        :d="guagePath.path"
+        :d="gaugePath.path"
         :style="strokeStyle"
         :filter="`url(#${renderId})`"
       ></path>
       <text
         x="125"
-        :y="doughnut ? 128 : 100"
+        :y="doughnut ? 118 : 100"
         text-anchor="middle"
         :style="valueFontStyle"
       >
@@ -66,7 +66,7 @@
       </text>
       <text
         x="125"
-        :y="doughnut ? 140 : 112"
+        :y="doughnut ? 142 : 124"
         text-anchor="middle"
         :style="labelFontStyle"
         v-html="labelText"
@@ -75,8 +75,8 @@
       </text>
       <text
         :x="minTextX"
-        :y="doughnut ? 133 : 116"
-        v-if="showMinMax"
+        :y="124"
+        v-if="showMinMax && !doughnut"
         text-anchor="middle"
         :style="minMaxFontStyle"
       >
@@ -84,13 +84,21 @@
       </text>
       <text
         :x="maxTextX"
-        :y="doughnut ? 133 : 116"
-        v-if="showMinMax"
+        :y="124"
+        v-if="showMinMax && !doughnut"
         text-anchor="middle"
         :style="minMaxFontStyle"
-        v-html="max"
       >
         <tspan v-html="max"></tspan>
+      </text>
+      <text
+        :x="125"
+        :y="240"
+        v-if="showMinMax && doughnut"
+        text-anchor="middle"
+        :style="minMaxFontStyle"
+      >
+        <tspan>{{max}} {{labelText}}</tspan>
       </text>
     </g>
   </svg>
@@ -114,7 +122,7 @@ export function animateCalc(
 
   const doUpdate = () => {
     const timeDiff = new Date().getTime() - curTime;
-    /* Math.min makes it so when we're over the time 
+    /* Math.min makes it so when we're over the time
     limit we become equal to the new value and can stop updating. */
     let ratio = Math.min(timeDiff / duration, 1);
     let calcRatio = ratio;
@@ -136,10 +144,14 @@ export function animateCalc(
 }
 
 export default {
-  name: "k-guage",
+  name: "k-gauge",
   props: {
     title: {
       type: String
+    },
+    titleStyle: {
+      type: String,
+      default: 'fill: #999999; font-size: 24px; font-weight: bold'
     },
     width: {
       type: Number,
@@ -182,11 +194,11 @@ export default {
     },
     labelFontStyle: {
       type: String,
-      default: "font: 10px Arial; fill: #b3b3b3"
+      default: "font: 18px Arial; fill: #88888"
     },
     minMaxFontStyle: {
       type: String,
-      default: "font: 10px Arial; fill: #b4b4b4"
+      default: "font: 20px Arial; fill: #88888"
     },
     animateOnLoad: {
       type: Boolean,
@@ -200,7 +212,7 @@ export default {
       type: Boolean,
       default: true
     },
-    guageSize: {
+    gaugeSize: {
       type: Number,
       default: 1
     },
@@ -232,17 +244,17 @@ export default {
         ? this.min
         : this.formatFunction(this.value),
       backgroundPath: "",
-      guageColor: "",
+      gaugeColor: "",
       builtColorSteps: intColors,
       animationCanceler: null,
-      renderId: `k-guage-filter-${++renderId}`,
+      renderId: `k-gauge-filter-${++renderId}`,
       minTextX: 0,
       maxTextX: 0
     };
   },
   mounted() {
     this.$watch(
-      vm => [vm.height, vm.width, vm.doughnut, vm.guageSize],
+      vm => [vm.height, vm.width, vm.doughnut, vm.gaugeSize],
       this.resetBgArc
     );
     this.resetBgArc();
@@ -251,11 +263,11 @@ export default {
     makeArc(value) {
       /* Code used from JustGage http://justgage.com/ */
 
-      const gws = this.guageSize;
+      const gws = this.gaugeSize;
       const dx = 0;
       const dy = 0;
 
-      const w = 250;
+      const w = this.doughnut ? 220 : 250;
       const h = this.doughnut ? 250 : 150;
 
       if (this.doughnut) {
@@ -347,14 +359,14 @@ export default {
     }
   },
   computed: {
-    guagePath() {
+    gaugePath() {
       return this.makeArc(this.shownValue);
     },
     strokeStyle() {
       if (!this.doughnut) {
         return "";
       } else {
-        return "transform: rotate(90deg); transform-origin: 50% 50%";
+        return "transform: rotate(90deg); transform-origin: 125px 125px";
       }
     }
   },
@@ -381,7 +393,7 @@ export default {
     shownValue: {
       handler(val) {
         let color = this.getColorForValue(val).join(",");
-        this.guageColor = `rgb(${color})`;
+        this.gaugeColor = `rgb(${color})`;
       },
       immediate: true
     }
