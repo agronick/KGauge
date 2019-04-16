@@ -33,7 +33,7 @@
       ></feComposite>
     </filter>
     <text
-      y="16"
+      y="15"
       x="125"
       v-if="title"
       text-anchor="middle"
@@ -41,7 +41,7 @@
     >
       <tspan v-html="title"></tspan>
     </text>
-    <g transform="translate(0 33)">
+    <g transform="translate(0 20)">
       <path
         :fill="backgroundColor"
         stroke="none"
@@ -66,7 +66,7 @@
       </text>
       <text
         x="125"
-        :y="doughnut ? 142 : 124"
+        :y="doughnut ? 142 : 120"
         text-anchor="middle"
         :style="labelFontStyle"
         v-html="labelText"
@@ -75,7 +75,7 @@
       </text>
       <text
         :x="minTextX"
-        :y="124"
+        :y="120"
         v-if="showMinMax && !doughnut"
         text-anchor="middle"
         :style="minMaxFontStyle"
@@ -84,7 +84,7 @@
       </text>
       <text
         :x="maxTextX"
-        :y="124"
+        :y="120"
         v-if="showMinMax && !doughnut"
         text-anchor="middle"
         :style="minMaxFontStyle"
@@ -151,14 +151,14 @@ export default {
     },
     titleStyle: {
       type: String,
-      default: 'fill: #999999; font-size: 24px; font-weight: bold'
+      default: 'fill: #999999; font-size: 20px; font-weight: bold'
     },
     width: {
-      type: Number,
+      type: [Number, String],
       default: 200
     },
     height: {
-      type: Number,
+      type: [Number, String],
       default: 150
     },
     value: {
@@ -194,11 +194,11 @@ export default {
     },
     labelFontStyle: {
       type: String,
-      default: "font: 18px Arial; fill: #88888"
+      default: "font: 16px Arial; fill: #b3b3b3"
     },
     minMaxFontStyle: {
       type: String,
-      default: "font: 20px Arial; fill: #88888"
+      default: "font: 16px Arial; fill: #b4b4b4"
     },
     animateOnLoad: {
       type: Boolean,

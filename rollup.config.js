@@ -4,9 +4,9 @@ import commonjs from "rollup-plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
 
 export default {
-  input: "src/KGuage.vue", // Path relative to package.json
+  input: "src/KGauge.vue", // Path relative to package.json
   output: {
-    name: "KGuage",
+    name: "KGauge",
     exports: "named"
   },
   plugins: [

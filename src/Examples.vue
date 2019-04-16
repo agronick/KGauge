@@ -2,7 +2,7 @@
   <div id="app">
     <div class="info">
       <h3>
-        KGuage for Vue &mdash; Based off JustGage.js &mdash; Only 8kb minified
+        KGauge for Vue &mdash; Based off JustGage.js &mdash; Only 8kb minified
         uncompressed
       </h3>
       <a href="https://github.com/agronick/KGauge"
@@ -10,26 +10,26 @@
       >
     </div>
     <div>
-      <k-guage
-        :value="guage1"
+      <k-gauge
+        :value="gauge1"
         :width="500"
         :height="300"
         :max="300"
         label-text="GB"
         title="Default Style"
       />
-      <input type="range" min="0" max="300" v-model="guage1" />
+      <input type="range" min="0" max="300" v-model="gauge1" />
       <div class="desc">Normal Setup (slider input is seperate component)</div>
     </div>
     <div>
-      <k-guage
+      <k-gauge
         title="Doughnut Style"
-        :value="guage2"
+        :value="gauge2"
         :width="500"
         :height="300"
         :max="100"
         label-text="CPU"
-        :guage-size="1"
+        :gauge-size="1"
         :animate-duration="3000"
         :shadow-opacity="0.8"
         :formatFunction="formatPct"
@@ -37,75 +37,75 @@
         :show-min-max="true"
         :doughnut="true"
       />
-      <input type="range" min="0" max="100" v-model="guage2" />
+      <input type="range" min="0" max="100" v-model="gauge2" />
       <div class="desc">
         Doughnut mode with a custom easing function, formatting function,
         changed animation duration and custom shadow.
       </div>
     </div>
     <div>
-      <k-guage
+      <k-gauge
         title="Skinny Style"
-        :value="guage4"
+        :value="gauge4"
         :width="500"
         :height="300"
         :max="5000"
         label-text="Visitors"
-        :guage-size="0.3"
+        :gauge-size="0.3"
         :animate-duration="3000"
         :shadow-opacity="0.3"
         :color-steps="['#ff0004', '#ffff00', '#22ff29']"
         :show-min-max="false"
         :doughnut="false"
       />
-      <input type="range" min="0" max="5000" v-model="guage4" />
+      <input type="range" min="0" max="5000" v-model="gauge4" />
       <div class="desc">Change size, shadow opacity, and hide mix and max.</div>
     </div>
     <div>
-      <k-guage
+      <k-gauge
         title="Styled Style"
-        :value="guage3"
+        :value="gauge3"
         :width="500"
         :height="300"
         :max="200"
         label-text="Funds Raised"
-        :guage-size="0.5"
+        :gauge-size="0.5"
         :shadow-opacity="0.8"
         :formatFunction="formatDollar"
         :color-steps="['#ff080c', '#ff54c9', '#8161ff', '#83ffb7', '#18ff27']"
         :show-min-max="true"
         :doughnut="false"
       />
-      <input type="range" min="0" max="200" v-model="guage3" />
+      <input type="range" min="0" max="200" v-model="gauge3" />
       <div class="desc">
         Custom colors and formatting function. All font styles can be
         overridden.
       </div>
     </div>
     <div>
-      <k-guage></k-guage>
+      <k-gauge></k-gauge>
       <div class="desc">
         Super simple to use. Default config with just
-        &lt;k-guage&gt;&lt;/k-guage&gt;
+        &lt;k-gauge&gt;&lt;/k-gauge&gt;
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import KGuage from "./KGuage.vue";
+import KGauge from "./KGauge.vue";
 
 export default {
   name: "app",
   components: {
-    KGuage
+    KGauge
   },
   data() {
     return {
-      guage1: 60,
-      guage2: 20,
-      guage3: 40,
-      guage4: 2000
+      gauge1: 60,
+      gauge2: 20,
+      gauge3: 40,
+      gauge4: 2000
     };
   },
   methods: {

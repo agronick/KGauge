@@ -1,12 +1,12 @@
 {
-  "name": "@kagronick/kguage-vue",
-  "version": "1.0.2",
+  "name": "@kagronick/kgauge-vue",
+  "version": "1.0.3",
   "private": false,
-  "main": "dist/kguage-vue.umd.js",
-  "module": "dist/kguage-vue.esm.js",
-  "unpkg": "dist/kguage-vue.min.js",
+  "main": "dist/kgauge-vue.umd.js",
+  "module": "dist/kgauge-vue.esm.js",
+  "unpkg": "dist/kgauge-vue.min.js",
   "browser": {
-    "./sfc": "src/KGuage.vue"
+    "./sfc": "src/KGauge.vue"
   },
   "description": "JustGage rebuilt for Vue in only 8kb",
   "author": "Kyle Agronick",
@@ -14,10 +14,10 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "lint": "vue-cli-service lint",
-    "build:umd": "rollup --config rollup.config.js --format umd --file dist/kguage-vue.umd.js",
-    "build:es": "rollup --config rollup.config.js --format es --file dist/kguage-vue.esm.js",
-    "build:unpkg": "rollup --config rollup.config.js --format iife --file dist/kguage-vue.min.js",
-    "build:example": "rollup --config rollup.example.config.js --format iife --file dist/kguage-example.min.js"
+    "build:umd": "rollup --config rollup.config.js --format umd --file dist/kgauge-vue.umd.js",
+    "build:es": "rollup --config rollup.config.js --format es --file dist/kgauge-vue.esm.js",
+    "build:unpkg": "rollup --config rollup.config.js --format iife --file dist/kgauge-vue.min.js",
+    "build:example": "rollup --config rollup.example.config.js --format iife --file dist/kgauge-example.min.js"
   },
   "dependencies": {
     "vue": "^2.6.6"
@@ -68,7 +68,7 @@
   "keywords": [
     "gauge",
     "gage",
-    "guage",
+    "gauge",
     "donut",
     "doughnut",
     "circle",

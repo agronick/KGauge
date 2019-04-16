@@ -2,7 +2,7 @@
 
 KGague is the JustGage JavaScript library remade for Vue.js. It does not use any dependencies including JustGage or Raphael. All rendering is done using the Vue rendering engine using SVGs.
 
-KGuage is 7% of the size of Just Gage with Raphael and covers most of the features. The whole library is only 8kb minified. Compare that to JustGage which is 20kb for JustGage minified and 90kb for Raphael minified. Even if you only use Vue for KGuage your page will still be smaller. 
+KGauge is 7% of the size of Just Gage with Raphael and covers most of the features. The whole library is only 8kb minified. Compare that to JustGage which is 20kb for JustGage minified and 90kb for Raphael minified. Even if you only use Vue for KGauge your page will still be smaller. 
 
 
 
@@ -14,20 +14,20 @@ KGuage is 7% of the size of Just Gage with Raphael and covers most of the featur
 ## How to use
 
 ```bash
-npm i @kagronick/kguage-vue
+npm i @kagronick/kgauge-vue
 ```
 
 ```js
-import KGuage from "@kagronick/kguage-vue";
+import KGauge from "@kagronick/kgauge-vue";
 export default {
   components: {
-    KGuage
+    KGauge
   },
 }
 ```
 
 ```html
-<k-guage 
+<k-gauge 
   :value="30"
   :width="500"
   :height="300"
@@ -36,7 +36,7 @@ export default {
 ```
 Or just download and add
 ```html
-<script src="dist/kguage-vue.min.js"></script>
+<script src="dist/kgauge-vue.min.js"></script>
 ```
 
 
@@ -61,12 +61,16 @@ No properties are required but you'll probably want to set value, min, and max t
 | animateOnLoad     | Animate to initial value                                                                                                    | true                                                                    |
 | labelText         | Text to show under value                                                                                                    | `''`                                                                    |
 | showMinMax        | Show the min and max labels                                                                                                 | true                                                                    |
-| guageSize         | Scaling of the guage. Can be made negative to draw the guage outwards from the center.                                      | 1                                                                       |
+| gaugeSize         | Scaling of the gauge. Can be made negative to draw the gauge outwards from the center.                                      | 1                                                                       |
 | shadowOpacity     | Amount of shadow. Set to 0 to disable.                                                                                      | .2                                                                      |
 | backgroundColor   | Color of background                                                                                                         | #edebeb                                                                 |
-| easingFunction    | Easing function for animations. Can be used to bounce the guage into position.                                              | `(t)=> t*(2-t) /* Ease out quad */`                                     |
+| easingFunction    | Easing function for animations. Can be used to bounce the gauge into position.                                              | `(t)=> t*(2-t) /* Ease out quad */`                                     |
 
 
+# Changelog
+
+04-15-2019 (1.0.3)
+Fixed spelling, allow strings for width and height, added title style, changed default sizing and positioning.
 
 
 Made by Kyle Agronick with code from the original JustGage project. http://justgage.com/
