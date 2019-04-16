@@ -65,6 +65,8 @@ No properties are required but you'll probably want to set value, min, and max t
 | shadowOpacity     | Amount of shadow. Set to 0 to disable.                                                                                      | .2                                                                      |
 | backgroundColor   | Color of background                                                                                                         | #edebeb                                                                 |
 | easingFunction    | Easing function for animations. Can be used to bounce the gauge into position.                                              | `(t)=> t*(2-t) /* Ease out quad */`                                     |
+| title             | Title string                                                                                                                |                                                                         |
+| titleStyle        | Style for the title                                                                                                         | `fill: #999999; font-size: 24px; font-weight: bold`                     |
 
 
 # Changelog
