@@ -349,7 +349,7 @@ export default {
       const newColor = this.builtColorSteps[placement].map((color, i) => {
         const compareTo = this.builtColorSteps[placement + 1][i];
         const diff = compareTo - color;
-        return color + diff * placementInStep;
+        return Math.round(color + diff * placementInStep);
       });
 
       return newColor;

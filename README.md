@@ -70,6 +70,8 @@ No properties are required but you'll probably want to set value, min, and max t
 
 
 # Changelog
+05-18-2019 (1.0.4)
+Fixed issue with rounding color values to show up correctly on IE.
 
 04-15-2019 (1.0.3)
 Fixed spelling, allow strings for width and height, added title style, changed default sizing and positioning.

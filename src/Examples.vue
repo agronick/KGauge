@@ -2,8 +2,7 @@
   <div id="app">
     <div class="info">
       <h3>
-        KGauge for Vue &mdash; Based off JustGage.js &mdash; Only 8kb minified
-        uncompressed
+        KGauge for Vue &mdash; Based off JustGage.js &mdash; Only 8kb minified uncompressed 
       </h3>
       <a href="https://github.com/agronick/KGauge"
         >https://github.com/agronick/KGauge</a
