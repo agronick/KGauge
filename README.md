@@ -1,4 +1,4 @@
-## KGague
+## KGague - A Gauge Library for Vue
 
 KGague is the JustGage JavaScript library remade for Vue.js. It does not use any dependencies including JustGage or Raphael. All rendering is done using the Vue rendering engine using SVGs.
 
