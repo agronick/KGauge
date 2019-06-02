@@ -15,14 +15,14 @@
         :height="300"
         :max="300"
         label-text="GB"
-        title="Default Style"
+        title="Default Gauge"
       />
       <input type="range" min="0" max="300" v-model="gauge1" />
       <div class="desc">Normal Setup (slider input is seperate component)</div>
     </div>
     <div>
       <k-gauge
-        title="Doughnut Style"
+        title="Doughnut Gauge"
         :value="gauge2"
         :width="500"
         :height="300"
@@ -44,7 +44,7 @@
     </div>
     <div>
       <k-gauge
-        title="Skinny Style"
+        title="Skinny Gauge"
         :value="gauge4"
         :width="500"
         :height="300"
@@ -56,13 +56,14 @@
         :color-steps="['#ff0004', '#ffff00', '#22ff29']"
         :show-min-max="false"
         :doughnut="false"
+        title-style="fill: #999999; font-size: 12px; font-weight: 600; transform: translateY(-5px)"
       />
       <input type="range" min="0" max="5000" v-model="gauge4" />
       <div class="desc">Change size, shadow opacity, and hide mix and max.</div>
     </div>
     <div>
       <k-gauge
-        title="Styled Style"
+        title="Gauge with Custom Styles"
         :value="gauge3"
         :width="500"
         :height="300"
@@ -73,6 +74,7 @@
         :format-function="formatDollar"
         :min-text-format-fn="formatDollar"
         :max-text-format-fn="formatDollar"
+        title-style="fill: #999999; font-size: 12px; font-weight: 600;  transform: translateY(-5px)"
         min-max-font-style="font: 9px Arial; fill: #b4b4b4; transform: translateY(-10px)"
         :color-steps="['#ff080c', '#ff54c9', '#8161ff', '#83ffb7', '#18ff27']"
         :show-min-max="true"
@@ -80,8 +82,8 @@
       />
       <input type="range" min="0" max="200" v-model="gauge3" />
       <div class="desc">
-        Custom colors and formatting function. All font styles can be
-        overridden.
+        Custom colors and formatting function on value and min and max. 
+        All font styles can be overridden.
       </div>
     </div>
     <div>
