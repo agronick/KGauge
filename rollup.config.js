@@ -2,7 +2,7 @@ import vue from "rollup-plugin-vue"; // Handle .vue SFC files
 import buble from "rollup-plugin-buble"; // Transpile/polyfill with reasonable browser support
 import commonjs from "rollup-plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
-console.log(('es' in process.argv))
+
 export default {
   input: "src/KGauge.vue", // Path relative to package.json
   output: {
