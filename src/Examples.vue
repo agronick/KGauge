@@ -105,9 +105,9 @@ export default {
   data() {
     return {
       gauge1: 60,
-      gauge2: 20,
+      gauge2: 73,
       gauge3: 40,
-      gauge4: 2000
+      gauge4: 3700
     };
   },
   methods: {
