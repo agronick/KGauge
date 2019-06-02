@@ -1,6 +1,6 @@
 {
   "name": "@kagronick/kgauge-vue",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "private": false,
   "main": "dist/kgauge-vue.umd.js",
   "module": "dist/kgauge-vue.esm.js",

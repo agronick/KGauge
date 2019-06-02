@@ -57,10 +57,12 @@ No properties are required but you'll probably want to set value, min, and max t
 | colorSteps        | An array of colors to fade between                                                                                          | `["#a9d70b", "#f9c802", "#ff0000"]`                                     |
 | valueFontStyle    | Font style for the value text                                                                                               | `font-size: 35px; fill: #010101; font-weight: bold; font-family: "Arial"` |
 | labelFontStyle    | The font style for the label under the value                                                                                | `font: 10px Arial; fill: #b3b3b3`                                         |
-| minMaxFontStyle   | The font style for the min and max labels                                                                                   | `font: 11px Arial; fill: #b4b4b4 `                                        |
+| minMaxFontStyle   | The font style for the min and max labels                                                                                   | `font: 11px Arial; fill: #b4b4b4`                                        |
 | animateOnLoad     | Animate to initial value                                                                                                    | true                                                                    |
 | labelText         | Text to show under value                                                                                                    | `''`                                                                    |
 | showMinMax        | Show the min and max labels                                                                                                 | true                                                                    |
+| minTextFormatFn   | Format the min text value                                                                                                   | `(v) => v`                                                                 |
+| maxTextFormatFn   | Format the max text value                                                                                                   | `(v) => v`                                                                 |
 | gaugeSize         | Scaling of the gauge. Can be made negative to draw the gauge outwards from the center.                                      | 1                                                                       |
 | shadowOpacity     | Amount of shadow. Set to 0 to disable.                                                                                      | .2                                                                      |
 | backgroundColor   | Color of background                                                                                                         | #edebeb                                                                 |
@@ -70,6 +72,11 @@ No properties are required but you'll probably want to set value, min, and max t
 
 
 # Changelog
+06-02-2019 (1.0.5)
+Allows min value to be larger than max value.
+Fixed issue with non-zero min value in doughnut gauges.
+Added min and max text format functions.
+
 05-18-2019 (1.0.4)
 Fixed issue with rounding color values to show up correctly on IE.
 

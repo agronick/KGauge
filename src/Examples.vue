@@ -33,7 +33,7 @@
         :shadow-opacity="0.8"
         :formatFunction="formatPct"
         :easing-function="easeOutBounce"
-        :show-min-max="true"
+        :show-min-max="false"
         :doughnut="true"
       />
       <input type="range" min="0" max="100" v-model="gauge2" />
@@ -70,7 +70,10 @@
         label-text="Funds Raised"
         :gauge-size="0.5"
         :shadow-opacity="0.8"
-        :formatFunction="formatDollar"
+        :format-function="formatDollar"
+        :min-text-format-fn="formatDollar"
+        :max-text-format-fn="formatDollar"
+        min-max-font-style="font: 9px Arial; fill: #b4b4b4; transform: translateY(-10px)"
         :color-steps="['#ff080c', '#ff54c9', '#8161ff', '#83ffb7', '#18ff27']"
         :show-min-max="true"
         :doughnut="false"

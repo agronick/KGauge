@@ -32,13 +32,7 @@
         in2="SourceGraphic"
       ></feComposite>
     </filter>
-    <text
-      y="15"
-      x="125"
-      v-if="title"
-      text-anchor="middle"
-      :style="titleStyle"
-    >
+    <text y="15" x="125" v-if="title" text-anchor="middle" :style="titleStyle">
       <tspan v-html="title"></tspan>
     </text>
     <g transform="translate(0 20)">
@@ -80,7 +74,7 @@
         text-anchor="middle"
         :style="minMaxFontStyle"
       >
-        <tspan v-html="min"></tspan>
+        <tspan v-html="minTextFormatFn(min)"></tspan>
       </text>
       <text
         :x="maxTextX"
@@ -89,7 +83,7 @@
         text-anchor="middle"
         :style="minMaxFontStyle"
       >
-        <tspan v-html="max"></tspan>
+        <tspan v-html="maxTextFormatFn(max)"></tspan>
       </text>
       <text
         :x="125"
@@ -98,7 +92,7 @@
         text-anchor="middle"
         :style="minMaxFontStyle"
       >
-        <tspan>{{max}} {{labelText}}</tspan>
+        <tspan>{{ max }} {{ labelText }}</tspan>
       </text>
     </g>
   </svg>
@@ -151,7 +145,7 @@ export default {
     },
     titleStyle: {
       type: String,
-      default: 'fill: #999999; font-size: 20px; font-weight: bold'
+      default: "fill: #999999; font-size: 20px; font-weight: bold"
     },
     width: {
       type: [Number, String],
@@ -227,7 +221,15 @@ export default {
     easingFunction: {
       type: Function,
       default: t => t * (2 - t) /* Ease out quad */
-    }
+    },
+    maxTextFormatFn: {
+      type: Function,
+      default: f => f
+    },
+    minTextFormatFn: {
+      type: Function,
+      default: f => f
+    },
   },
   data() {
     const intColors = this.colorSteps.map(color => {
@@ -253,6 +255,11 @@ export default {
     };
   },
   mounted() {
+
+    if (this.min === this.max) {
+      throw Error("Min and max can not be equal")
+    }
+
     this.$watch(
       vm => [vm.height, vm.width, vm.doughnut, vm.gaugeSize],
       this.resetBgArc
@@ -260,6 +267,12 @@ export default {
     this.resetBgArc();
   },
   methods: {
+    reverseValue(value) {
+      const range = this.max - this.min;
+      const ratio = (value - this.min) / range;
+      const pos = this.max - (range * ratio);
+      return pos;
+    },
     makeArc(value) {
       /* Code used from JustGage http://justgage.com/ */
 
@@ -271,8 +284,18 @@ export default {
       const h = this.doughnut ? 250 : 150;
 
       if (this.doughnut) {
-        const alpha =
-          (1 - (2 * (value - this.min)) / (this.max - this.min)) * Math.PI;
+        let min, max;
+
+        if (this.isReversed) {
+          value = this.reverseValue(value);
+          max = this.min - this.max;
+          min = value - this.max;
+        } else {
+          max = this.max - this.min;
+          min = value - this.min;
+        }
+
+        const alpha = (1 - (2 * min) / max) * Math.PI;
         const Ro = w * 0.5 - w / 20;
         const Ri = Ro - (w / 6.666666666666667) * gws;
 
@@ -286,12 +309,12 @@ export default {
 
         let path = "M" + (Cx - Ri) + "," + Cy + " ";
         path += "L" + (Cx - Ro) + "," + Cy + " ";
-        if (value > (this.max - this.min) / 2) {
+        if (min > max * 0.5) {
           path += "A" + Ro + "," + Ro + " 0 0 1 " + (Cx + Ro) + "," + Cy + " ";
         }
         path += "A" + Ro + "," + Ro + " 0 0 1 " + maxTextX2 + "," + Yo + " ";
         path += "L" + maxTextX1 + "," + Yi + " ";
-        if (value > (this.max - this.min) / 2) {
+        if (min > max * 0.5) {
           path += "A" + Ri + "," + Ri + " 0 0 0 " + (Cx + Ri) + "," + Cy + " ";
         }
         path += "A" + Ri + "," + Ri + " 0 0 0 " + (Cx - Ri) + "," + Cy + " ";
@@ -336,12 +359,13 @@ export default {
       this.maxTextX = pathProps.maxTextX;
     },
     getColorForValue(val) {
+
       const stepCount = this.builtColorSteps.length;
       if (val === this.max) {
         return this.builtColorSteps[stepCount - 1];
       }
 
-      const ratio = val / this.max;
+      const ratio = (val - this.min) / (this.max - this.min);
       const stepPosition = ratio * (stepCount - 1);
       const placement = Math.floor(stepPosition);
       const placementInStep = stepPosition % 1;
@@ -355,7 +379,10 @@ export default {
       return newColor;
     },
     checkLimits(val) {
-      return Math.max(this.min, Math.min(this.max, val));
+      return Math.max(
+        this.isReversed ? this.max : this.min,
+        Math.min(this.isReversed ? this.min : this.max, val)
+      );
     }
   },
   computed: {
@@ -368,6 +395,9 @@ export default {
       } else {
         return "transform: rotate(90deg); transform-origin: 125px 125px";
       }
+    },
+    isReversed() {
+      return this.min > this.max;
     }
   },
   watch: {
