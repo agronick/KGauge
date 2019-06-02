@@ -87,6 +87,23 @@
       </div>
     </div>
     <div>
+      <k-gauge
+        title="Basic Doughnut"
+        :value="gauge5"
+        :color-steps="['#ffa726']"
+        :width="500"
+        :height="300"
+        :max="100"
+        :gauge-size="0.4"
+        :formatFunction="(x) => `${x.toFixed(2)}%`"
+        :show-min-max="false"
+        :doughnut="true"
+        :shadow-opacity="0"
+      />
+      <input type="range" min="0" max="100" v-model="gauge5" />
+      <div class="desc">Single color with shadows disabled.</div>
+    </div>
+    <div>
       <k-gauge></k-gauge>
       <div class="desc">
         Super simple to use. Default config with just
@@ -109,7 +126,8 @@ export default {
       gauge1: 60,
       gauge2: 73,
       gauge3: 40,
-      gauge4: 3700
+      gauge4: 3700,
+      gauge5: 50
     };
   },
   methods: {

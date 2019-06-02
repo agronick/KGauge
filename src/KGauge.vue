@@ -38,17 +38,13 @@
     <g transform="translate(0 20)">
       <path
         :fill="backgroundColor"
-        stroke="none"
         :d="backgroundPath"
-        :style="strokeStyle"
-        :filter="`url(#${renderId})`"
+        v-bind="pathArgs"
       ></path>
       <path
         :fill="gaugeColor"
-        stroke="none"
         :d="gaugePath.path"
-        :style="strokeStyle"
-        :filter="`url(#${renderId})`"
+        v-bind="pathArgs"
       ></path>
       <text
         x="125"
@@ -365,6 +361,10 @@ export default {
         return this.builtColorSteps[stepCount - 1];
       }
 
+      if (stepCount === 1) {
+        return this.builtColorSteps[0];
+      }
+
       const ratio = (val - this.min) / (this.max - this.min);
       const stepPosition = ratio * (stepCount - 1);
       const placement = Math.floor(stepPosition);
@@ -398,6 +398,18 @@ export default {
     },
     isReversed() {
       return this.min > this.max;
+    },
+    pathArgs() {
+      const args = {
+        stroke: 'none',
+        style: this.strokeStyle,
+      };
+
+      if (this.shadowOpacity) {
+        args.filter = `url(#${this.renderId})`;
+      }
+
+      return args;
     }
   },
   watch: {

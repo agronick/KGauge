@@ -72,6 +72,10 @@ No properties are required but you'll probably want to set value, min, and max t
 
 
 # Changelog
+06-02-2019 (1.0.6)
+Fixed bug with single color step.
+Fixed bug with shadows disabled.
+
 06-02-2019 (1.0.5)
 Allows min value to be larger than max value.
 Fixed issue with non-zero min value in doughnut gauges.
