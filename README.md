@@ -1,6 +1,6 @@
 ## KGague - A Gauge Library for Vue
 
-KGague is the JustGage JavaScript library remade for Vue.js. It does not use any dependencies including JustGage or Raphael. All rendering is done using the Vue rendering engine using SVGs.
+KGague is the JustGage JavaScript library remade for Vue.js. It does not use any dependencies including JustGage or Raphael. All rendering is done with the Vue rendering engine using SVGs. The gagues it produces are arc or circle shapes. The gagues animate by default with the ability to customise easing functions. As the gauges moves through different ranges you can have the color fade. e.g (Green when low, red when high) These color steps can be customised. Many other features of the Gauge can be customized as well.
 
 KGauge is 7% of the size of Just Gage with Raphael and covers most of the features. The whole library is only 8kb minified. Compare that to JustGage which is 20kb for JustGage minified and 90kb for Raphael minified. Even if you only use Vue for KGauge your page will still be smaller. 
 
