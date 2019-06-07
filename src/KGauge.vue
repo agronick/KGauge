@@ -32,7 +32,7 @@
         in2="SourceGraphic"
       ></feComposite>
     </filter>
-    <text y="15" x="125" v-if="title" text-anchor="middle" :style="titleStyle">
+    <text :y="doughnut ? 18 : 15" x="125" v-if="title" text-anchor="middle" :style="titleStyle">
       <tspan v-html="title"></tspan>
     </text>
     <g transform="translate(0 20)">
