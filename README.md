@@ -72,6 +72,10 @@ No properties are required but you'll probably want to set value, min, and max t
 
 
 # Changelog
+06-07-2019 (1.0.7)
+Fixed title cut off on doughnut on small sizes
+
+
 06-02-2019 (1.0.6)
 Fixed bug with single color step.
 Fixed bug with shadows disabled.
